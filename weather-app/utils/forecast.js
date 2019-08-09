@@ -8,10 +8,12 @@ const forecast = (lat, long, callback) => {
         } else if (response.body.error) {
             callback('Unable to find location');
         } else {
+            const summary = response.body.currently.summary;
+            const temp = response.body.currently.temperature;
+            const precip = response.body.currently.precipProbability;
             callback(undefined, {
-                temp: response.body.currently.temperature,
-                precip: response.body.currently.precipProbability,
-                timezone: response.body.timezone
+                timezone: response.body.timezone,
+                forecast: 'It is currently ' + summary + ' and ' + temp + ' degrees out. There is a ' + precip + '% chance of rain.'
             });
         };
     });
