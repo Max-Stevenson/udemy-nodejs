@@ -1,23 +1,17 @@
+const path = require('path');
 const express = require('express');
 
 const app = express();
-
- app.get('', (req, res) => {
-     res.send('Hello Express!');
- });
-
- app.get('/help', (req, res) => {
-     res.send('Help Page');
- })
-
- app.get('/about', (req, res) => {
-    res.send('About Page');
-})
+const publicDirectoryPath = path.join(__dirname, '../public');
+app.use(express.static(publicDirectoryPath));
 
 app.get('/weather', (req, res) => {
-    res.send('Weather Page');
-})
+    res.send({
+        location: 'Madison, WI',
+        forecast: 'sunny'
+    });
+});
 
- app.listen(3000), () => {
-     console.log('Server running on port 3000')
- }
+ app.listen(3000, () => {
+     console.log('Server running on port 3000');
+ });
