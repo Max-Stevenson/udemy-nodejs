@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8">
     <title>Weather App</title>
+    <link rel="icon" href="/images/icon.png">
+    <link rel="stylesheet" href="./css/styles.css">
   </head>
   <body>
-    {{>header}}
-    {{title}}
-    <h1><b>404</b></h1>
-    {{message}}
+    <div class="main-content">
+      {{>header}}
+      {{title}}
+      <h1><b>404</b></h1>
+      {{message}}
+    </div>
     {{>footer}} 
   </body>
 </html>
