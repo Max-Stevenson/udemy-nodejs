@@ -1,8 +1,30 @@
-h1 {
-    color: red;
+body {
+    color: #333333;
+    font-family: arial;
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
-img {
-    width: 200px;
-    height: 200px;
+footer {
+    color: #888888;
+    border-top: 1px solid #eeeeee;
+    margin-top: 15px;
+    padding: 15px 0;
+}
+
+header {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 65px;
+    margin-bottom: 15px;
+}
+
+header a {
+    color: #888888;
+    margin-right: 15px;
+    text-decoration: none;
 }
