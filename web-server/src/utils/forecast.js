@@ -5,9 +5,13 @@ const forecast = (lat, long, callback) => {
     const url = 'https://api.darksky.net/forecast/'+ DARK_SKY_API +'/'+ lat + ',' + long;
     request({url, json: true}, (error, {body}) => {
         if (error) {
-            callback('Unable to connect to the weather service');
+            callback({
+                error: 'Unable to connect to Dark Sky API.'
+            });
         } else if (body.error) {
-            callback('Unable to find location');
+            callback({
+                error: 'Unable to get forecast data for location.'
+            });
         } else {
             const summary = body.currently.summary;
             const temp = body.currently.temperature;
