@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src='/js/app.js'></script>
     <meta charset="UTF-8">
     <title>Weather App</title>
     <link rel="icon" href="/images/icon.png">
@@ -11,7 +10,12 @@
     <div class="main-content">
       {{>header}}
       <p>A weather forecast app</p>
+      <form class="searchForm">
+        <input placeholder="Location">
+        <button>Search</button>
+      </form>
     </div>
     {{>footer}}
+    <script src='/js/app.js'></script>
   </body>
 </html>
