@@ -16,9 +16,11 @@ const forecast = (lat, long, callback) => {
             const summary = body.currently.summary;
             const temp = body.currently.temperature;
             const precip = body.currently.precipProbability;
+            const hourlySummary = body.hourly.summary;
             callback(undefined, {
                 timezone: body.timezone,
-                forecast: 'It is currently ' + summary + ' and ' + temp + ' degrees out. There is a ' + precip + '% chance of rain.'
+                forecast: 'It is currently ' + summary + ' and ' + temp + ' degrees out. There is a ' + precip + '% chance of rain.',
+                futureHour: 'Forecast for the day: ' + hourlySummary
             });
         };
     });

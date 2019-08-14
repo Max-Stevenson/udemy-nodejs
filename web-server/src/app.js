@@ -52,13 +52,14 @@ app.get('/weather', (req, res) => {
             if (error) {
                 return res.send(error);
             };
-            forecast(lat, long, (error, {forecast}) => {
+            forecast(lat, long, (error, {forecast, futureHour}) => {
                 if (error) {
                     return res.send(error);
                 };
                 res.send({
                     location: location,
-                    forecast: forecast
+                    forecast: forecast,
+                    futureHour: futureHour
                 });
             });
         });

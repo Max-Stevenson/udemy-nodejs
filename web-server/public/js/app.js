@@ -4,6 +4,7 @@ const weatherForm = document.querySelector('form');
 const search = document.querySelector('input');
 const forecastParagraph = document.querySelector('#forecast');
 const errorParagraph = document.querySelector('#errorMessage');
+const hourForecastParagraph = document.querySelector('#hourForecastParagraph');
 
 
 weatherForm.addEventListener('submit', (event) => {
@@ -11,6 +12,7 @@ weatherForm.addEventListener('submit', (event) => {
     const location = search.value;
     errorParagraph.textContent = '';
     forecastParagraph.textContent= 'Loading...';
+    hourForecastParagraph.textContent = '';
 
     fetch('/weather?address=' + location).then((response) => {
         response.json().then((data) => {
@@ -19,7 +21,7 @@ weatherForm.addEventListener('submit', (event) => {
                 errorParagraph.textContent = data.error;
             } else {
                 forecastParagraph.textContent = data.location + ". " + data.forecast;
-                
+                hourForecastParagraph.textContent = data.futureHour;
             };
         });
     });
