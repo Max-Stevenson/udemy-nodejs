@@ -12,11 +12,15 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (err, client) => {
 
     const db = client.db(databaseName);
 
-    db.collection('users').findOne({name: 'Max'}, (err, res) => {
+    db.collection('New Tasks').findOne({_id: new ObjectID('5d566b3345f1251f2b05e5aa')}, (err, res) => {
         if (err) {
             return console.log('unable to fetch');
         };
 
+        console.log(res);
+        
+    });
+    db.collection('New Tasks').find({compleated: false}).toArray((err, res) => {
         console.log(res);
         
     });
