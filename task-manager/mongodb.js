@@ -11,8 +11,23 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (err, client) => {
 
     const db = client.db(databaseName);
 
-    db.collection('users').insertOne({
-        name: 'Max',
-        age: 28
+    db.collection('New Tasks').insertMany([
+        {
+            description: 'test task one',
+            compleated: false
+        },
+        {
+            description: 'test task two',
+            compleated: true
+        },
+        {
+            description: 'test task three',
+            compleated: false
+        }
+    ], (err, res) => {
+        if (err) {
+            return console.log('unable to add items to database');
+        };
+        console.log(res.ops);
     });
 });
