@@ -19,8 +19,28 @@ const me = new User({
     age: 'dsfs'
 });
 
-me.save().then((res) => {
-    console.log(res);   
-}).catch((err) => {
+// me.save().then((res) => {
+//     console.log(res);   
+// }).catch((err) => {
+//     console.log(err);
+// });
+
+const Task = mongoose.model('Task', {
+    description: {
+        type: String
+    },
+    compleated: {
+        type: Boolean
+    }
+});
+
+const task = new Task({
+    description: 'This is a test task',
+    compleated: false
+});
+
+task.save().then((res)=>{
+    console.log(res); 
+}).catch((err)=>{
     console.log(err);
 });
