@@ -35,7 +35,7 @@ app.get('/users/:id', async (req, res) => {
         if (!user) {
             return res.status(404).send();
         };
-        res.send(user);
+        res.status(200).send(user);
     } catch (error) {
         res.status(500).send(error);
     };
@@ -44,7 +44,7 @@ app.get('/users/:id', async (req, res) => {
 app.get('/users', async (req, res) => {
     try {
         const users = await User.find({});
-        res.status(201).send(users);
+        res.status(200).send(users);
     } catch (error) {
         res.status(500).send(error);
     };
@@ -57,7 +57,7 @@ app.get('/tasks/:id', async (req, res) => {
         if (!task) {
             return res.status(404).send();
         };
-        res.status(201).send(task);
+        res.status(200).send(task);
     } catch (error) {
         res.status(500).send();
     };
@@ -66,9 +66,32 @@ app.get('/tasks/:id', async (req, res) => {
 app.get('/tasks', async (req, res) => {
     try {
         const tasks = await Task.find({});
-        res.status(201).send(tasks);
+        res.status(200).send(tasks);
     } catch (error) {
         res.status(500).send(error);
+    };
+});
+
+app.patch('/users/:id', async(req, res) => {
+    const _id = req.params.id;
+    const body = req.body;
+    const allowedUpdate = ['name', 'email', 'password', 'age'];
+    const updates = Object.keys(body);
+    const isValidOperation = updates.every((item) => {return allowedUpdate.includes(item)});
+
+    if (!isValidOperation) {
+        return res.status(400).send({error: 'Cannot update this value'});
+    };
+
+    try {
+        const user = await User.findByIdAndUpdate(_id, body, {new: true, runValidators: true});
+
+        if (!user) {
+            return res.status(404).send();
+        }
+        res.status(200).send(user);
+    } catch (error) {
+        res.status(400).send(error);
     };
 });
 
