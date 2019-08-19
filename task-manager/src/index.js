@@ -72,7 +72,7 @@ app.get('/tasks', async (req, res) => {
     };
 });
 
-app.patch('/users/:id', async(req, res) => {
+app.patch('/users/:id', async (req, res) => {
     const _id = req.params.id;
     const body = req.body;
     const allowedUpdate = ['name', 'email', 'password', 'age'];
@@ -80,7 +80,7 @@ app.patch('/users/:id', async(req, res) => {
     const isValidOperation = updates.every((item) => {return allowedUpdate.includes(item)});
 
     if (!isValidOperation) {
-        return res.status(400).send({error: 'Cannot update this value'});
+        return res.status(400).send({error: 'You cannot update this field'});
     };
 
     try {
@@ -88,10 +88,32 @@ app.patch('/users/:id', async(req, res) => {
 
         if (!user) {
             return res.status(404).send();
-        }
+        };
         res.status(200).send(user);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(500).send(error);
+    };
+});
+
+app.patch('/tasks/:id', async (req, res) => {
+    const _id = req.params.id;
+    const body = req.body;
+    const allowedUpdate = ['compleated', 'description'];
+    const updates = Object.keys(body);
+    const isValidOperation = updates.every((item) => {return allowedUpdate.includes(item)});
+
+    if (!isValidOperation) {
+        return res.status(400).send({error: "You cannot update this field"});
+    };
+
+    try {
+        const task = await Task.findByIdAndUpdate(_id, body, {new: true, runValidators: true});
+        if (!task) {
+            return res.status(404).send();
+        };
+        res.status(200).send(task)
+    } catch (error) {
+        res.status(500).send(error);
     };
 });
 
