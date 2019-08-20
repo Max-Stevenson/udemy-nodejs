@@ -117,6 +117,19 @@ app.patch('/tasks/:id', async (req, res) => {
     };
 });
 
+app.delete('/users/:id', async (req, res) => {
+    const _id = req.params.id;
+    try {
+        const user = await User.findByIdAndDelete(_id);
+        if (!user) {
+            return res.status(404).send();
+        };
+        res.status(200).send(user);
+    } catch (error) {
+        res.status(500).send(error);
+    };
+});
+
 app.listen(port, () => {
     console.log('Server is up on port: ' + port);
 });
