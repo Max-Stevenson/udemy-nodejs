@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -22,8 +23,8 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true, 
         validate(value) {
-            if (!validator.isLength(value, {min: 6, max: 15})) {
-                throw new Error('Password must be between 6 - 15 characters');
+            if (!validator.isLength(value, {min: 6})) {
+                throw new Error('Password must be more than 6 characters');
             };
             if (validator.contains(value, 'password')) { 
                 throw new Error('Password cannot contain \'password\'');
@@ -41,8 +42,22 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Email is invalid');
             }
         }
-    }
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 });
+
+userSchema.methods.generateAuthToken = async function () {
+    const user = this;
+    const token = jwt.sign({_id: user._id.toString()}, 'tokenize');
+    user.tokens = user.tokens.concat({ token });
+    await user.save();
+    return token;
+};
 
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email });
@@ -63,6 +78,6 @@ userSchema.pre('save', async function(next) {
     }
     next();
 });
-const User = mongoose.model('User', userSchema);
 
+const User = mongoose.model('User', userSchema);
 module.exports = User;
