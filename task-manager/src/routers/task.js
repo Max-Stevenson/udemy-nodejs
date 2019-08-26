@@ -32,6 +32,13 @@ router.get('/tasks/:id', auth, async (req, res) => {
 
 router.get('/tasks', auth, async (req, res) => {
     const match = {};
+    const sort = {};
+
+    if (req.query.sortBy) {
+        const parts = req.query.sortBy.split('_');
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
+    };
+
     if (req.query.compleated) {
         match.compleated = req.query.compleated === 'true';
     };
@@ -41,7 +48,8 @@ router.get('/tasks', auth, async (req, res) => {
             match,
             options: {
                 limit: parseInt(req.query.limit),
-                skip: parseInt(req.query.skip)
+                skip: parseInt(req.query.skip),
+                sort
             }
         }).execPopulate();
         res.status(200).send(req.user.tasks);
