@@ -6,9 +6,14 @@ const taskRouter = require('./routers/task');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// app.use((req, res, next) => {
-//     res.status(503).send('server down for maintenance');
-// });
+const multer = require('multer');
+const upload = multer({
+    dest: 'images'
+});
+
+app.post('/upload', upload.single('upload'), (req, res) => {
+    res.send();
+});
 
 app.use(express.json());
 app.use(userRouter);
