@@ -60,7 +60,7 @@ const upload = multer({
     },
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(jpg|png|jpeg)$/)) {
-            return cb(new Error('File must be a jpg or png'));
+            return cb(new Error('File must be either a jpgeg, jpg or png'));
         }
         cb(undefined, true);
     }
@@ -68,6 +68,8 @@ const upload = multer({
 
 router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
     res.send();
+}, (error, req, res, next) => {
+    res.status(400).send({error: error.message});
 });
 
 router.get('/users/me', auth, async (req, res) => {
