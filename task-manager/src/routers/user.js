@@ -51,7 +51,6 @@ router.post('/users/logoutAll', auth, async (req, res) => {
         await req.user.save();
         res.status(200).send();
     } catch (error) {
-        console.log(error);
         res.status(500).send();
     };
 });
@@ -126,11 +125,12 @@ router.patch('/users/me', auth, async (req, res) => {
 
 router.delete('/users/me', auth, async (req, res) => {
     try {
+        cancelationEmail(req.user.email, req.user.name);
         await req.user.remove();
-        cancelationEmail(user.email, user.name);
         res.status(200).send(req.user);
     } catch (error) {
-        res.status(500).send(error);
+        console.log(error);
+        res.status(500).send(error);        
     };
 });
 
