@@ -18,3 +18,8 @@ test('Should create task for user', async () => {
    expect(task).not.toBeNull();
    expect(task.compleated).toBe(false);
 });
+
+test('User two cannot delete user one task', async () => {
+    // const response = await request(app).post()
+
+});
