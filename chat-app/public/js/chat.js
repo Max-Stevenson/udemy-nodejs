@@ -1,15 +1,5 @@
 const socket = io();
 
-// socket.on('countUpdated', (count) => {
-//     console.log('count updated ' + count); 
-// });
-
-// const buttonOne = document.querySelector('#buttonOne');
-
-// buttonOne.addEventListener('click', () => {
-//     socket.emit('incremented');
-// });
-
 socket.on('welcomeMessage', (eventData) => {
     console.log(eventData); 
 });
@@ -17,9 +7,9 @@ socket.on('welcomeMessage', (eventData) => {
 const chatForm = document.getElementsByClassName('chatForm')[0];
 const messageInput = document.getElementById('messageBox');
 
-chatForm.addEventListener('submit', () => {
+chatForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const message = messageInput.value;
+    const message = event.target.elements.message.value;
     socket.emit('clientMessage', message);
 });
 
