@@ -1,6 +1,6 @@
 const socket = io();
 
-socket.on('welcomeMessage', (eventData) => {
+socket.on('message', (eventData) => {
     console.log(eventData); 
 });
 
@@ -14,5 +14,5 @@ chatForm.addEventListener('submit', (event) => {
 });
 
 socket.on('showMessage', (message) => {
-    console.log(message);  
+    console.log(message);
 });

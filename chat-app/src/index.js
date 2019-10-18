@@ -18,8 +18,15 @@ const server = app.listen(port, () => {
 const io = socketio(server);
 io.on('connection', (socket) => {
     console.log('new websocket connection');
-    socket.emit('welcomeMessage', 'welcome to the server!');
+
+    socket.emit('message', 'welcome to the server!');
+    socket.broadcast.emit('message', 'a new user has joined the server');
+
     socket.on('clientMessage', (message) => {
         io.emit('showMessage', message);
+    });
+
+    socket.on('disconnect', () => {
+        io.emit('message', 'a user has left the server')
     });
 });
