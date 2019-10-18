@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
     socket.emit('showMessage', 'welcome to the server!');
     socket.broadcast.emit('showMessage', 'a new user has joined the server');
 
-    socket.on('clientMessage', (message, callback) => {
+    socket.on('sendMessage', (message, callback) => {
         const filter = new Filter();
 
         if (filter.isProfane(message)) {
@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('shareLocation', (position, callback) => {
-        socket.broadcast.emit('showMessage', `https://google.com/maps?q=${position.lat},${position.long}`);
+        socket.broadcast.emit('locationShared', `https://google.com/maps?q=${position.lat},${position.long}`);
         callback();
     });
 
