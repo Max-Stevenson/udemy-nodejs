@@ -10,7 +10,12 @@ const messageInput = document.getElementById('messageBox');
 chatForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const message = event.target.elements.message.value;
-    socket.emit('clientMessage', message);
+    socket.emit('clientMessage', message, (error) => {
+        if (error) {
+            return console.log(error);
+        };
+        console.log('message delivered');
+    });
 });
 
 socket.on('showMessage', (message) => {
