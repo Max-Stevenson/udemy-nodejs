@@ -19,14 +19,18 @@ const io = socketio(server);
 io.on('connection', (socket) => {
     console.log('new websocket connection');
 
-    socket.emit('message', 'welcome to the server!');
-    socket.broadcast.emit('message', 'a new user has joined the server');
+    socket.emit('showMessage', 'welcome to the server!');
+    socket.broadcast.emit('showMessage', 'a new user has joined the server');
 
     socket.on('clientMessage', (message) => {
         io.emit('showMessage', message);
     });
 
+    socket.on('shareLocation', (position) => {
+        socket.broadcast.emit('showMessage', `https://google.com/maps?q=${position.lat},${position.long}`);
+    });
+
     socket.on('disconnect', () => {
-        io.emit('message', 'a user has left the server')
+        io.emit('showMessage', 'a user has left the server')
     });
 });

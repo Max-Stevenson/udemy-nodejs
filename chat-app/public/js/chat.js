@@ -16,3 +16,16 @@ chatForm.addEventListener('submit', (event) => {
 socket.on('showMessage', (message) => {
     console.log(message);
 });
+
+document.querySelector('#locationButton').addEventListener('click', () => {
+    if (!navigator.geolocation) {
+        return alert('Geolocation is not supported by your browser');
+    }
+
+    navigator.geolocation.getCurrentPosition((position) => {
+        socket.emit('shareLocation', {
+            lat: position.coords.latitude,
+            long: position.coords.longitude
+        });
+    });
+});
