@@ -1,11 +1,10 @@
 const socket = io();
-
-socket.on('message', (eventData) => {
-    console.log(eventData); 
-});
-
 const chatForm = document.getElementsByClassName('chatForm')[0];
 const messageInput = document.getElementById('messageBox');
+
+socket.on('showMessage', (message) => {
+    console.log(message);
+});
 
 chatForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -18,10 +17,6 @@ chatForm.addEventListener('submit', (event) => {
     });
 });
 
-socket.on('showMessage', (message) => {
-    console.log(message);
-});
-
 document.querySelector('#locationButton').addEventListener('click', () => {
     if (!navigator.geolocation) {
         return alert('Geolocation is not supported by your browser');
@@ -31,6 +26,8 @@ document.querySelector('#locationButton').addEventListener('click', () => {
         socket.emit('shareLocation', {
             lat: position.coords.latitude,
             long: position.coords.longitude
+        }, () => {
+            console.log('location shared'); 
         });
     });
 });

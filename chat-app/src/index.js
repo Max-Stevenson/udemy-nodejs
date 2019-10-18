@@ -34,8 +34,9 @@ io.on('connection', (socket) => {
         callback('delivered');
     });
 
-    socket.on('shareLocation', (position) => {
+    socket.on('shareLocation', (position, callback) => {
         socket.broadcast.emit('showMessage', `https://google.com/maps?q=${position.lat},${position.long}`);
+        callback();
     });
 
     socket.on('disconnect', () => {
