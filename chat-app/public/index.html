@@ -5,9 +5,13 @@
     <title>Chat App</title>
   </head>
   <body>
-      <button id="buttonOne">Push Me</button>
-      <script src="/socket.io/socket.io.js"></script>
-      <script src="/js/chat.js"></script>
     <h1>Chat App</h1>
+    <form class="chatForm">
+        Message:<br>
+        <input type="text" placeholder="message" onfocus="this.value=''" name="message" id="messageBox"><br>
+        <input type="submit" value="submit">
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/chat.js"></script>
   </body>
 </html>
