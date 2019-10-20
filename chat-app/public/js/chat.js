@@ -21,7 +21,7 @@ socket.on('showMessage', (message) => {
 socket.on('locationShared', (url) => {
     console.log(url);
     const html = Mustache.render(locationTemplate, {
-        url: url,
+        url: url.url,
         createdAt: moment(url.createdAt).format('H:mm')
     });
     $messages.insertAdjacentHTML('beforeend', html);
