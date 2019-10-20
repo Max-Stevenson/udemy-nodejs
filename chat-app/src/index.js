@@ -21,8 +21,12 @@ const io = socketio(server);
 io.on('connection', (socket) => {
     console.log('new websocket connection');
 
-    socket.emit('showMessage', generateMessage('Welcome to server!'));
-    socket.broadcast.emit('showMessage', generateMessage('A new user has joined the server'));
+    socket.on('join', ({ username, room }) => {
+        socket.join(room)
+
+        socket.emit('showMessage', generateMessage('Welcome to server!'));
+        socket.broadcast.to(room).emit('showMessage', generateMessage(`${username} has joined!`));
+    });
 
     socket.on('sendMessage', (message, callback) => {
         const filter = new Filter();
