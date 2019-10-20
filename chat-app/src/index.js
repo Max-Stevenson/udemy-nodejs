@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
+const { generateMessage } = require('./utils/messages');
 
 const path = require('path');
 const app = express();
@@ -20,8 +21,8 @@ const io = socketio(server);
 io.on('connection', (socket) => {
     console.log('new websocket connection');
 
-    socket.emit('showMessage', 'welcome to the server!');
-    socket.broadcast.emit('showMessage', 'a new user has joined the server');
+    socket.emit('showMessage', generateMessage('Welcome to server!'));
+    socket.broadcast.emit('showMessage', generateMessage('A new user has joined the server'));
 
     socket.on('sendMessage', (message, callback) => {
         const filter = new Filter();
@@ -30,7 +31,7 @@ io.on('connection', (socket) => {
             return callback('no bad language allowed');
         };
 
-        io.emit('showMessage', message);
+        io.emit('showMessage', generateMessage(message));
         callback('delivered');
     });
 
@@ -40,6 +41,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        io.emit('showMessage', 'a user has left the server')
+        io.emit('showMessage', generateMessage('A user has left the server'));
     });
 });
