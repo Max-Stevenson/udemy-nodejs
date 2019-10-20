@@ -13,7 +13,7 @@ socket.on('showMessage', (message) => {
     console.log(message);
     const html = Mustache.render(messageTemplate, {
         message: message.messageText,
-        createdAt: message.createdAt
+        createdAt: moment(message.createdAt).format('H:mm')
     });
     $messages.insertAdjacentHTML('beforeend', html);
 });
@@ -21,7 +21,8 @@ socket.on('showMessage', (message) => {
 socket.on('locationShared', (url) => {
     console.log(url);
     const html = Mustache.render(locationTemplate, {
-        url
+        url: url,
+        createdAt: moment(url.createdAt).format('H:mm')
     });
     $messages.insertAdjacentHTML('beforeend', html);
 });
