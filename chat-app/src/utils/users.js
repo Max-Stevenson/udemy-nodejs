@@ -31,7 +31,7 @@ addUser({
     room: 'room a'
 });
 
-const res = addUser({
+addUser({
     id: 24,
     username: 'aaa',
     room: 'room b'
@@ -52,8 +52,11 @@ const getUser = (id) => {
 };
 
 const getUsersInRoom = (room) => {
-    const users = users.find((user) => {
+    const foundUsers = users.find((user) => {
         return user.room === room
     });
-    return users;
+    return foundUsers;
 };
+
+foundUsers = getUsersInRoom('room b');
+console.log(foundUsers);
