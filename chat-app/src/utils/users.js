@@ -25,18 +25,6 @@ const addUser = ({id, username, room}) => {
     return { user} ;
 };
 
-addUser({
-    id: 22,
-    username: 'aaa',
-    room: 'room a'
-});
-
-addUser({
-    id: 24,
-    username: 'aaa',
-    room: 'room b'
-})
-
 const removeUser = (id) => {
     const index = users.findIndex((user) => user.id === id);
     if (index != -1) {
@@ -49,8 +37,12 @@ const getUser = (id) => {
 };
 
 const getUsersInRoom = (room) => {
-    return users.find((user) => user.room === room);
+    return users.find((user) => user.room === room.trim());
 };
 
-foundUsers = getUser(24);
-console.log(foundUsers);
+module.exports = {
+    addUser,
+    removeUser,
+    getUser,
+    getUsersInRoom
+};
