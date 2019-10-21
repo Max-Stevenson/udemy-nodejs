@@ -37,12 +37,6 @@ const res = addUser({
     room: 'room b'
 })
 
-console.log(users);
-
-console.log(res);
-
-
-
 const removeUser = (id) => {
     const index = users.findIndex((user) => user.id === id);
     if (index != -1) {
@@ -50,15 +44,16 @@ const removeUser = (id) => {
     };
 };
 
-const removedUser = removeUser(24);
-
-console.log(removedUser);
-
-
-const getUser = () => {
-
+const getUser = (id) => {
+    const user = users.find((user) => { 
+        return user.id === id 
+    });
+    return user;
 };
 
-const getUsersInRoom = () => {
-
+const getUsersInRoom = (room) => {
+    const users = users.find((user) => {
+        return user.room === room
+    });
+    return users;
 };
