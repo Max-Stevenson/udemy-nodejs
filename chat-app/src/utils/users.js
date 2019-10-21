@@ -45,18 +45,12 @@ const removeUser = (id) => {
 };
 
 const getUser = (id) => {
-    const user = users.find((user) => { 
-        return user.id === id 
-    });
-    return user;
+    return users.find((user) => user.id === id);
 };
 
 const getUsersInRoom = (room) => {
-    const foundUsers = users.find((user) => {
-        return user.room === room
-    });
-    return foundUsers;
+    return users.find((user) => user.room === room);
 };
 
-foundUsers = getUsersInRoom('room b');
+foundUsers = getUser(24);
 console.log(foundUsers);
