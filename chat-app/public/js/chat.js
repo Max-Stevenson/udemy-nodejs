@@ -31,6 +31,10 @@ socket.on('locationShared', (url) => {
     $messages.insertAdjacentHTML('beforeend', html);
 });
 
+socket.on('roomData', ({room, users}) => {
+    
+});
+
 $messageForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
