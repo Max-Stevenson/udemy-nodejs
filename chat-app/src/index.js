@@ -34,8 +34,8 @@ io.on('connection', (socket) => {
         }
 
         socket.join(user.room);
-        socket.emit('showMessage', generateMessage('Welcome to server!'));
-        socket.broadcast.to(user.room).emit('showMessage', generateMessage(`${user.username} has joined!`));
+        socket.emit('showMessage', generateMessage('Admin', 'Welcome to server!'));
+        socket.broadcast.to(user.room).emit('showMessage', generateMessage('Admin', `${user.username} has joined!`));
         callback();
     });
 
@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         const user = removeUser(socket.id);
         if (user) {
-            io.to(user.room).emit('showMessage', generateMessage(`${user.username} left ${user.room}.`));
+            io.to(user.room).emit('showMessage', generateMessage('Admin', `${user.username} left ${user.room}.`));
         };
     });
 });
