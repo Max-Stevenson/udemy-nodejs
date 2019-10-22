@@ -40,18 +40,20 @@ io.on('connection', (socket) => {
     });
 
     socket.on('sendMessage', (message, callback) => {
+        const user = getUser(socket.id);
         const filter = new Filter();
 
         if (filter.isProfane(message)) {
             return callback('no bad language allowed');
         };
 
-        io.emit('showMessage', generateMessage(message));
+        io.to(user.room).emit('showMessage', generateMessage(message));
         callback('delivered');
     });
 
     socket.on('shareLocation', (position, callback) => {
-        socket.broadcast.emit('locationShared', generateLocationMessage(`https://google.com/maps?q=${position.lat},${position.long}`));
+        const user = getUser(socket.id);
+        socket.broadcast.to(user.room).emit('locationShared', generateLocationMessage(`https://google.com/maps?q=${position.lat},${position.long}`));
         callback();
     });
 
