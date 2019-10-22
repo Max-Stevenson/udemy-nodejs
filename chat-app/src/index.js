@@ -47,13 +47,13 @@ io.on('connection', (socket) => {
             return callback('no bad language allowed');
         };
 
-        io.to(user.room).emit('showMessage', generateMessage(message));
+        io.to(user.room).emit('showMessage', generateMessage(user.username, message));
         callback('delivered');
     });
 
     socket.on('shareLocation', (position, callback) => {
         const user = getUser(socket.id);
-        socket.broadcast.to(user.room).emit('locationShared', generateLocationMessage(`https://google.com/maps?q=${position.lat},${position.long}`));
+        socket.broadcast.to(user.room).emit('locationShared', generateLocationMessage(user.username, `https://google.com/maps?q=${position.lat},${position.long}`));
         callback();
     });
 
