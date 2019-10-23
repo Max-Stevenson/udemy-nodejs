@@ -11,25 +11,44 @@ const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML;
 
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
 
+const autoScroll = () => {
+    // new message element
+    $newMessage = $messages.lastElementChild;
+    // height of new message
+    const newMessageStyles = getComputedStyle($newMessage);
+    const newMessageMargin = parseInt(newMessageStyles.marginBottom);
+    const newMessageHeight = $newMessage.offsetHeight + newMessageMargin;    
+    // visible height of message
+    const visibleHeight = $messages.offsetHeight;
+    // height of messages container
+    const containerHeight = $messages.scrollHeight;
+    // scroll position
+    const scrollOffset = $messages.scrollTop + visibleHeight;
+
+    if (containerHeight - newMessageHeight <= scrollOffset) {
+        $messages.scrollTop = $messages.scrollHeight;
+    };
+};
+
 
 socket.on('showMessage', (message) => {
-    console.log(message);
     const html = Mustache.render(messageTemplate, {
         username: message.username,
         message: message.messageText,
         createdAt: moment(message.createdAt).format('H:mm')
     });
     $messages.insertAdjacentHTML('beforeend', html);
+    autoScroll();
 });
 
 socket.on('locationShared', (url) => {
-    console.log(url);
     const html = Mustache.render(locationTemplate, {
         username: url.username,
         url: url.url,
         createdAt: moment(url.createdAt).format('H:mm')
     });
     $messages.insertAdjacentHTML('beforeend', html);
+    autoscroll();
 });
 
 socket.on('roomData', ({room, users}) => {
@@ -53,7 +72,6 @@ $messageForm.addEventListener('submit', (event) => {
         if (error) {
             return console.log(error);
         };
-        console.log('message delivered');
     });
 });
 
@@ -67,8 +85,7 @@ $shareLocationButton.addEventListener('click', () => {
             lat: position.coords.latitude,
             long: position.coords.longitude
         }, () => {
-            console.log('location shared');
-            $shareLocationButton.removeAttribute('disabled');
+                $shareLocationButton.removeAttribute('disabled');
         });
     });
 });

@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
         };
 
         io.to(user.room).emit('showMessage', generateMessage(user.username, message));
-        callback('delivered');
+        callback();
     });
 
     socket.on('shareLocation', (position, callback) => {
